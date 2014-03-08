@@ -3,14 +3,17 @@ var context = null;
 var h,w;
 
 var distanceDetection = 100;
+var entropyDistanceDetection = 100;
 
 var props = {
-	particles: 150
+	particles: 150,
+	entropyParticles: 3
 };
 
 len = props.particles;
 
 var model = [];
+var entropyModel = [];
 
 $( document ).ready(function() {
 	cnv = $('#display')[0];
@@ -33,21 +36,38 @@ function fullScreenCanvas() {
 
 function init() {
 	"use strict";
-
+	var entity, maxSpeed = 10;
 	for(var i=0; i<props.particles; i++) {
-		var entity = {
+
+		entity = {
 			x: Math.floor(Math.random() * w) + 1,
 			y: Math.floor(Math.random() * h) + 1,
-			speedY: Math.floor(Math.random() * 10) + 1,
-			speedX: Math.floor(Math.random() * 10) + 1
+			speedY: Math.random() * 2 * maxSpeed - maxSpeed,
+			speedX: Math.random() * 2 * maxSpeed - maxSpeed
 		};
 
 		model.push(entity);
 	}
 
+	var num = props.entropyParticles;
+	while (num--) {
+		generateEntropyEntity();
+	}
+
 	setInterval(function() {
 		loop();
 	}, 16);
+}
+
+function generateEntropyEntity () {
+	var entity = {
+		x: Math.floor(Math.random() * w) + 1,
+		y: Math.floor(Math.random() * h) + 1,
+		speedY: Math.random() * 2 - 1,
+		speedX: Math.random() * 2 - 1
+	};
+
+	entropyModel.push(entity);
 }
 
 function loop() {
@@ -79,6 +99,33 @@ function loop() {
 		}
 	}
 
+	//draw entropy model
+	context.fillStyle = 'red';
+	var len = entropyModel.length;
+
+	var entity;
+	while(len--) {
+		entity = entropyModel[len];
+
+		//draw a circle
+		context.beginPath();
+		context.arc(entity.x, entity.y, 4, 0, Math.PI*2, true);
+		context.closePath();
+		context.fill();
+
+		entity.x += entity.speedX;
+		entity.y += entity.speedY;
+
+		if(entity.x < 0 || entity.x > w) {
+			entity.speedX = entity.speedX*-1;
+		}
+
+		if(entity.y < 0 || entity.y > h) {
+			entity.speedY = entity.speedY*-1;
+		}
+	}
+
+
 	//
 	len = model.length;
 	var len2 = len;
@@ -95,6 +142,30 @@ function loop() {
 				//draw line between two points
 				context.strokeStyle = 'white';
 				context.beginPath();
+				context.moveTo(entity.x, entity.y);
+				context.lineTo(entity2.x, entity2.y);
+				context.lineWidth = 1;
+				context.stroke();
+				context.closePath();
+			}
+		}
+	}
+
+	len = model.length;
+	var entropyLen = entropyModel.length;
+	var entity2;
+	while(len--) {
+		//get entity
+		entity = model[len];
+		len2 = entropyLen;
+		while(len2--) {
+			entity2 = entropyModel[len2];
+			if(Math.abs(entity.x-entity2.x) < entropyDistanceDetection
+				&& Math.abs(entity.y-entity2.y) < entropyDistanceDetection) {
+
+				//draw line between two points
+				context.beginPath();
+				context.strokeStyle = 'red';
 				context.moveTo(entity.x, entity.y);
 				context.lineTo(entity2.x, entity2.y);
 				context.lineWidth = 1;
