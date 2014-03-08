@@ -1,10 +1,17 @@
 var cnv = null;
 var context = null;
+
+var streamProps = {
+	bps: 0,
+	volume: 0,
+	note: 0
+}
+
 $( document ).ready(function() {
 	cnv = $('#display')[0];
 	context = cnv.getContext('2d');
 	fullScreenCanvas();
-	initialDraw();
+	init();
 });
 
 $(window).resize(function() {
@@ -17,23 +24,25 @@ function fullScreenCanvas() {
 	cnv.height = $(document).height();
 }
 
-function initialDraw() {
+function init() {
 	"use strict";
 
 	var color = 0;
 	var direction = 1;
 
+
 	setInterval(function() {
-		context.fillStyle = "rgb("+color+", "+color+", "+color+")";
-		color += direction;
-		if(color === 255) {
-			direction = direction * -1;
-		}
+		//graphical code here
+		//updateStreamProps();
+		
+	}, 16);
+}
 
-		if(color === 0) {
-			direction = direction * -1;
-		}
-
-		context.fillRect(0,0,cnv.width,cnv.height);
-	}, 0);
+function updateStreamProps() {
+	"use strict";
+	streamProps = {
+		bps: 20,
+		volume: 20,
+		note:40
+	};
 }
