@@ -22,6 +22,10 @@ var entropyPower = 0.5;
 var maxSpeed = 10;
 //////////////////////// end config
 
+var colors = ['255,255,255', '73,251,53', '255,120,0', '251,132,53',
+			'251,53,172', '132,53,251', '251,231,53', '251,53,73'];
+var numColors = colors.length;
+
 len = props.particles;
 
 var model = [];
@@ -177,7 +181,7 @@ function loop() {
 				if(lineLong <= distanceDetection) {
 					//draw line between two points
 					alpha = (distanceDetection - lineLong) / distanceDetection;
-					context.strokeStyle ='rgba(255,255,255,'+alpha+')';
+					context.strokeStyle ='rgba('+colors[~~(Math.random()*numColors)]+','+alpha+')';
 					context.beginPath();
 					context.moveTo(entity.x, entity.y);
 					context.lineTo(entity2.x, entity2.y);
