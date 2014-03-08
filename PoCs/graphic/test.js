@@ -2,7 +2,7 @@ var cnv = null;
 var context = null;
 var h,w;
 
-//config
+///////////////////////// config
 var distanceDetection = 100;
 var entropyDistanceDetection = 100;
 
@@ -17,10 +17,10 @@ var showEntropyPoints = false;
 var showEntropyLines = false;
 var clearCanvas = true;
 
-var lineWidth = 0.3;
+var lineWidth = 1;
 var entropyPower = 0.5;
-
-//end config
+var maxSpeed = 10;
+//////////////////////// end config
 
 len = props.particles;
 
@@ -48,7 +48,7 @@ function fullScreenCanvas() {
 
 function init() {
 	"use strict";
-	var entity, maxSpeed = 10;
+	var entity;
 	cnv.style.webkitFilter = "blur("+blur+"px)";
 	for(var i=0; i<props.particles; i++) {
 
@@ -161,11 +161,11 @@ function loop() {
 			offsetX = Math.abs(entity.x-entity2.x);
 			if(offsetX < distanceDetection && offsetY < distanceDetection) {
 				//draw line between two points
-				context.strokeStyle = 'white';
+				context.strokeStyle ='rgba(255,255,255,'+Math.max(offsetX, offsetY) / distanceDetection+')';
 				context.beginPath();
 				context.moveTo(entity.x, entity.y);
 				context.lineTo(entity2.x, entity2.y);
-				context.lineWidth = (lineWidth*distanceDetection) / Math.max(offsetX, offsetY);
+				context.lineWidth = (lineWidth*Math.max(offsetX, offsetY)) / distanceDetection;
 				context.stroke();
 				context.closePath();
 			}
