@@ -177,7 +177,7 @@ function loop() {
 				if(lineLong <= distanceDetection) {
 					//draw line between two points
 					alpha = (distanceDetection - lineLong) / distanceDetection;
-					context.strokeStyle ='rgba(255,175,75,'+alpha+')';
+					context.strokeStyle ='rgba(255,255,255,'+alpha+')';
 					context.beginPath();
 					context.moveTo(entity.x, entity.y);
 					context.lineTo(entity2.x, entity2.y);
