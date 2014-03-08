@@ -16,7 +16,10 @@ var errorCallback = function errorCallbackFunction(error) {
 
 var gotStreamCallback = function gotStreamCallbackFunction(stream) {
     var microphone = audioContext.createMediaStreamSource(stream);
-    microphone.connect(audioContext.destination);
+    var delayNode = audioContext.createDelay(100);
+    delayNode.delayTime.value = 2;
+    microphone.connect(delayNode);
+    delayNode.connect(audioContext.destination);
 }
 
 navigator.getMedia({audio: true}, gotStreamCallback, errorCallback);
