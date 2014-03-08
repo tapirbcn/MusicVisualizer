@@ -2,8 +2,10 @@ var cnv = null;
 var context = null;
 var h,w;
 
+var distanceDetection = 100;
+
 var props = {
-	particles: 100
+	particles: 150
 };
 
 len = props.particles;
@@ -36,8 +38,8 @@ function init() {
 		var entity = {
 			x: Math.floor(Math.random() * w) + 1,
 			y: Math.floor(Math.random() * h) + 1,
-			speedY: Math.floor(Math.random() * 20) + 1,
-			speedX: Math.floor(Math.random() * 20) + 1
+			speedY: Math.floor(Math.random() * 10) + 1,
+			speedX: Math.floor(Math.random() * 10) + 1
 		};
 
 		model.push(entity);
@@ -79,7 +81,26 @@ function loop() {
 
 	//
 	len = model.length;
+	var len2 = len;
+	var entity2;
 	while(len--) {
-		
+		//get entity
+		entity = model[len];
+		len2 = len;
+		while(len2--) {
+			entity2 = model[len2];
+			if(Math.abs(entity.x-entity2.x) < distanceDetection
+				&& Math.abs(entity.y-entity2.y) < distanceDetection) {
+
+				//draw line between two points
+				context.strokeStyle = 'white';
+				context.beginPath();
+				context.moveTo(entity.x, entity.y);
+				context.lineTo(entity2.x, entity2.y);
+				context.lineWidth = 1;
+				context.stroke();
+				context.closePath();
+			}
+		}
 	}
 }
