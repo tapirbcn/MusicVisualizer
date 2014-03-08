@@ -17,7 +17,7 @@ var showEntropyPoints = false;
 var showEntropyLines = false;
 var clearCanvas = true;
 
-var lineWidth = 1;
+var lineWidth = 1.1;
 var entropyPower = 0.5;
 var maxSpeed = 10;
 //////////////////////// end config
@@ -150,7 +150,7 @@ function loop() {
 	///////////////////////////////////draw balls lines
 	len = model.length;
 	var len2 = len;
-	var entity2, offsetY, offsetX;
+	var entity2, offsetY, offsetX, alpha, lineLong;
 	while(len--) {
 		//get entity
 		entity = model[len];
@@ -159,15 +159,21 @@ function loop() {
 			entity2 = model[len2];
 			offsetY = Math.abs(entity.y-entity2.y);
 			offsetX = Math.abs(entity.x-entity2.x);
-			if(offsetX < distanceDetection && offsetY < distanceDetection) {
-				//draw line between two points
-				context.strokeStyle ='rgba(255,255,255,'+Math.max(offsetX, offsetY) / distanceDetection+')';
-				context.beginPath();
-				context.moveTo(entity.x, entity.y);
-				context.lineTo(entity2.x, entity2.y);
-				context.lineWidth = (lineWidth*Math.max(offsetX, offsetY)) / distanceDetection;
-				context.stroke();
-				context.closePath();
+
+			if(offsetX <= distanceDetection && offsetY <= distanceDetection) {
+				//calculate line using pitagoras
+				lineLong = Math.sqrt(Math.pow(offsetX,2) + Math.pow(offsetY, 2));
+				if(lineLong <= distanceDetection) {
+					//draw line between two points
+					alpha = lineLong / distanceDetection;
+					context.strokeStyle ='rgba(255,255,255,'+alpha+')';
+					context.beginPath();
+					context.moveTo(entity.x, entity.y);
+					context.lineTo(entity2.x, entity2.y);
+					context.lineWidth = (lineWidth*lineLong) / distanceDetection;
+					context.stroke();
+					context.closePath();
+				}
 			}
 		}
 	}
