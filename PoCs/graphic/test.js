@@ -182,7 +182,7 @@ function loop() {
 	len = model.length;
 	var entropyLen = entropyModel.length;
 	var entity2;
-	var deltaX, deltaY;
+	var deltaX, deltaY, speedAux;
 	while(len--) {
 		//get entity
 		entity = model[len];
@@ -205,8 +205,10 @@ function loop() {
 					context.closePath();
 				}
 
-				entity.speedX = entity.speedX + entropyPower * deltaX/Math.abs(deltaX);
-				entity.speedY = entity.speedY + entropyPower * deltaY/Math.abs(deltaY);
+				speedAux = entity.speedX + entropyPower * deltaX/Math.abs(deltaX);
+				entity.speedX = speedAux > maxSpeed ? maxSpeed : speedAux;
+				speedAux = entity.speedY + entropyPower * deltaY/Math.abs(deltaY);
+				entity.speedY = speedAux > maxSpeed ? maxSpeed : speedAux;
 			}
 		}
 	}
