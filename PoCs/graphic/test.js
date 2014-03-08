@@ -14,7 +14,7 @@ var props = {
 var blur = 0; //slow in chrome :(
 var showPoints = false;
 var clearCanvas = true;
-var lineWidth = 1;
+var lineWidth = 0.5;
 //end config
 
 len = props.particles;
@@ -85,6 +85,7 @@ function loop() {
 		context.clearRect ( 0 , 0 , w, h );
 	}
 
+	///////////////////////////////////draw balls models
 	context.fillStyle = 'white';
 	var len = model.length;
 
@@ -112,7 +113,7 @@ function loop() {
 		}
 	}
 
-	//draw entropy model
+	////////////////////////////////draw entropy model
 	context.fillStyle = 'red';
 	var len = entropyModel.length;
 
@@ -139,7 +140,7 @@ function loop() {
 	}
 
 
-	//
+	///////////////////////////////////draw balls lines
 	len = model.length;
 	var len2 = len;
 	var entity2, offsetY, offsetX;
@@ -164,6 +165,7 @@ function loop() {
 		}
 	}
 
+	///////////////////////////////////////detect entroy range
 	len = model.length;
 	var entropyLen = entropyModel.length;
 	var entity2;
