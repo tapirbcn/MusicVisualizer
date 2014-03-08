@@ -17,7 +17,7 @@ var showEntropyPoints = false;
 var showEntropyLines = false;
 var clearCanvas = true;
 
-var lineWidth = 3;
+var lineWidth = 5;
 var entropyPower = 0.5;
 var maxSpeed = 10;
 //////////////////////// end config
@@ -70,7 +70,8 @@ function init() {
 			x: Math.floor(Math.random() * w) + 1,
 			y: Math.floor(Math.random() * h) + 1,
 			speedY: Math.random() * 2 * maxSpeed - maxSpeed,
-			speedX: Math.random() * 2 * maxSpeed - maxSpeed
+			speedX: Math.random() * 2 * maxSpeed - maxSpeed,
+			color: 'rgba('+colors[~~(Math.random()*numColors)]+','
 		};
 
 		model.push(entity);
@@ -181,7 +182,7 @@ function loop() {
 				if(lineLong <= distanceDetection) {
 					//draw line between two points
 					alpha = (distanceDetection - lineLong) / distanceDetection;
-					context.strokeStyle ='rgba('+colors[~~(Math.random()*numColors)]+','+alpha+')';
+					context.strokeStyle = entity2.color + alpha+')';
 					context.beginPath();
 					context.moveTo(entity.x, entity.y);
 					context.lineTo(entity2.x, entity2.y);
