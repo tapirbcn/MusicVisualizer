@@ -13,17 +13,13 @@ var props = {
 
 var blur = 0; //slow in chrome :(
 var showPoints = false;
+var showEntropyPoints = false;
+var showEntropyLines = false;
 var clearCanvas = true;
-var lineWidth = 0.5;
 
-var colors = [
-	'blue',
-	'green',
-	'red',
-	'orange',
-	'purple',
-	'white'
-];
+var lineWidth = 0.3;
+var entropyPower = 0.5;
+
 //end config
 
 len = props.particles;
@@ -130,11 +126,13 @@ function loop() {
 	while(len--) {
 		entity = entropyModel[len];
 
-		//draw a circle
-		context.beginPath();
-		context.arc(entity.x, entity.y, 4, 0, Math.PI*2, true);
-		context.closePath();
-		context.fill();
+		if(showEntropyPoints) {
+			//draw a circle
+			context.beginPath();
+			context.arc(entity.x, entity.y, 4, 0, Math.PI*2, true);
+			context.closePath();
+			context.fill();
+		}
 
 		entity.x += entity.speedX;
 		entity.y += entity.speedY;
@@ -178,23 +176,31 @@ function loop() {
 	len = model.length;
 	var entropyLen = entropyModel.length;
 	var entity2;
+	var deltaX, deltaY;
 	while(len--) {
 		//get entity
 		entity = model[len];
 		len2 = entropyLen;
 		while(len2--) {
 			entity2 = entropyModel[len2];
-			if(Math.abs(entity.x-entity2.x) < entropyDistanceDetection
-				&& Math.abs(entity.y-entity2.y) < entropyDistanceDetection) {
+			deltaX = entity.x-entity2.x;
+			deltaY = entity.y-entity2.y;
+			if(Math.abs(deltaX) < entropyDistanceDetection
+				&& Math.abs(deltaY) < entropyDistanceDetection) {
 
-				//draw line between two points
-				context.beginPath();
-				context.strokeStyle = 'red';
-				context.moveTo(entity.x, entity.y);
-				context.lineTo(entity2.x, entity2.y);
-				context.lineWidth = 1;
-				context.stroke();
-				context.closePath();
+				if (showEntropyLines) {
+					//draw line between point and entropy line
+					context.beginPath();
+					context.strokeStyle = 'red';
+					context.moveTo(entity.x, entity.y);
+					context.lineTo(entity2.x, entity2.y);
+					context.lineWidth = 1;
+					context.stroke();
+					context.closePath();
+				}
+
+				entity.speedX = entity.speedX + entropyPower * deltaX/Math.abs(deltaX);
+				entity.speedY = entity.speedY + entropyPower * deltaY/Math.abs(deltaY);
 			}
 		}
 	}
