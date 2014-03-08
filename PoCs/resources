@@ -2,3 +2,12 @@ http://www.html5rocks.com/en/tutorials/webaudio/intro/
 http://www.html5rocks.com/en/tutorials/webrtc/basics/?redirect_from_locale=es
 http://webaudioplayground.appspot.com/#
 http://webaudiodemos.appspot.com/
+http://www.html5rocks.com/en/tutorials/webaudio/games/#toc-clip-detect
+https://developer.mozilla.org/en-US/docs/Web/API/AnalyserNode
+
+Libraries:
+https://github.com/corbanbrook/dsp.js/
+https://github.com/cjcliffe/beatdetektor
+
+Using the analizer node for animations:
+http://ianreah.com/2013/02/28/Real-time-analysis-of-streaming-audio-data-with-Web-Audio-API.html
