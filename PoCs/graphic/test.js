@@ -15,6 +15,15 @@ var blur = 0; //slow in chrome :(
 var showPoints = false;
 var clearCanvas = true;
 var lineWidth = 0.5;
+
+var colors = [
+	'blue',
+	'green',
+	'red',
+	'orange',
+	'purple',
+	'white'
+];
 //end config
 
 len = props.particles;
@@ -158,14 +167,14 @@ function loop() {
 				context.beginPath();
 				context.moveTo(entity.x, entity.y);
 				context.lineTo(entity2.x, entity2.y);
-				context.lineWidth = lineWidth;
+				context.lineWidth = (lineWidth*distanceDetection) / Math.max(offsetX, offsetY);
 				context.stroke();
 				context.closePath();
 			}
 		}
 	}
 
-	///////////////////////////////////////detect entroy range
+	/////////////////////////////////////// detect entroy range
 	len = model.length;
 	var entropyLen = entropyModel.length;
 	var entity2;
