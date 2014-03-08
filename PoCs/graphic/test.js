@@ -2,6 +2,7 @@ var cnv = null;
 var context = null;
 var h,w;
 
+//config
 var distanceDetection = 100;
 var entropyDistanceDetection = 100;
 
@@ -9,6 +10,12 @@ var props = {
 	particles: 150,
 	entropyParticles: 3
 };
+
+var blur = 0; //slow in chrome :(
+var showPoints = false;
+var clearCanvas = true;
+var lineWidth = 1;
+//end config
 
 len = props.particles;
 
@@ -37,6 +44,7 @@ function fullScreenCanvas() {
 function init() {
 	"use strict";
 	var entity, maxSpeed = 10;
+	cnv.style.webkitFilter = "blur("+blur+"px)";
 	for(var i=0; i<props.particles; i++) {
 
 		entity = {
@@ -73,7 +81,10 @@ function generateEntropyEntity () {
 function loop() {
 	"use strict";
 	//draw model
-	context.clearRect ( 0 , 0 , w, h );
+	if(clearCanvas) {
+		context.clearRect ( 0 , 0 , w, h );
+	}
+
 	context.fillStyle = 'white';
 	var len = model.length;
 
@@ -81,11 +92,13 @@ function loop() {
 	while(len--) {
 		entity = model[len];
 
-		//draw a circle
-		context.beginPath();
-		context.arc(entity.x, entity.y, 2, 0, Math.PI*2, true);
-		context.closePath();
-		context.fill();
+		if(showPoints) {
+			//draw a circle
+			context.beginPath();
+			context.arc(entity.x, entity.y, 2, 0, Math.PI*2, true);
+			context.closePath();
+			context.fill();
+		}
 
 		entity.x += entity.speedX;
 		entity.y += entity.speedY;
@@ -129,22 +142,22 @@ function loop() {
 	//
 	len = model.length;
 	var len2 = len;
-	var entity2;
+	var entity2, offsetY, offsetX;
 	while(len--) {
 		//get entity
 		entity = model[len];
 		len2 = len;
 		while(len2--) {
 			entity2 = model[len2];
-			if(Math.abs(entity.x-entity2.x) < distanceDetection
-				&& Math.abs(entity.y-entity2.y) < distanceDetection) {
-
+			offsetY = Math.abs(entity.y-entity2.y);
+			offsetX = Math.abs(entity.x-entity2.x);
+			if(offsetX < distanceDetection && offsetY < distanceDetection) {
 				//draw line between two points
 				context.strokeStyle = 'white';
 				context.beginPath();
 				context.moveTo(entity.x, entity.y);
 				context.lineTo(entity2.x, entity2.y);
-				context.lineWidth = 1;
+				context.lineWidth = lineWidth;
 				context.stroke();
 				context.closePath();
 			}
