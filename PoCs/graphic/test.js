@@ -1,13 +1,13 @@
 var cnv = null;
 var context = null;
 var h,w;
-
+var paused = false;
 ///////////////////////// config
-var distanceDetection = 100;
+var distanceDetection = 180;
 var entropyDistanceDetection = 100;
 
 var props = {
-	particles: 150,
+	particles: 100,
 	entropyParticles: 3
 };
 
@@ -17,7 +17,7 @@ var showEntropyPoints = false;
 var showEntropyLines = false;
 var clearCanvas = true;
 
-var lineWidth = 1.1;
+var lineWidth = 3;
 var entropyPower = 0.5;
 var maxSpeed = 10;
 //////////////////////// end config
@@ -46,6 +46,16 @@ function fullScreenCanvas() {
 	w = cnv.width;
 }
 
+function pause() {
+	"use strict";
+	paused = true;
+}
+
+function unpause() {
+	"use strict";
+	paused = false;
+}
+
 function init() {
 	"use strict";
 	var entity;
@@ -68,7 +78,8 @@ function init() {
 	}
 
 	setInterval(function() {
-		loop();
+		if(!paused)
+			loop();
 	}, 16);
 }
 
@@ -165,12 +176,14 @@ function loop() {
 				lineLong = Math.sqrt(Math.pow(offsetX,2) + Math.pow(offsetY, 2));
 				if(lineLong <= distanceDetection) {
 					//draw line between two points
-					alpha = lineLong / distanceDetection;
+					alpha = (distanceDetection - lineLong) / distanceDetection;
 					context.strokeStyle ='rgba(255,255,255,'+alpha+')';
 					context.beginPath();
 					context.moveTo(entity.x, entity.y);
 					context.lineTo(entity2.x, entity2.y);
-					context.lineWidth = (lineWidth*lineLong) / distanceDetection;
+
+					context.lineWidth = lineWidth - ((lineWidth*lineLong) / distanceDetection);
+
 					context.stroke();
 					context.closePath();
 				}
