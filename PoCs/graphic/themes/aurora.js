@@ -10,7 +10,7 @@ config = {
 	clearCanvas: true, //clear the canvas on each tick?
 	lineWidth: 150, //with of the lines
 	entropyPower: 0.5, //power of the entroy repelers
-	maxSpeed: 5, //maximum speed of a particle
+	maxSpeed: 3, //maximum speed of a particle
 	randomColors: true,
 	defaultColor: 'rgba(255,255,255,'
 };
