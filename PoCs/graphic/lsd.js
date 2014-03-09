@@ -2,6 +2,7 @@ var cnv = null;
 var context = null;
 var h,w;
 var paused = false;
+var nloop = 0;
 
 ///////////////////////// config variables, do not edit, use themes!
 
@@ -23,6 +24,7 @@ var colors;
 var randomColors;
 
 var defaultColor;
+var cleanAfterLoops;
 
 //////////////////////// end config, do not edit, use themes!
 
@@ -40,24 +42,28 @@ $( document ).ready(function() {
 		theme = 'light';
 	}
 	$.getScript( "themes/"+theme+".js" ).done(function( script, textStatus ) {
-		distanceDetection = config.distanceDetection;
-		entropyDistanceDetection = config.entropyDistanceDetection ;
+	
+		//try to read config from theme!
+		distanceDetection = config.distanceDetection?config.distanceDetection:150;
+		entropyDistanceDetection = config.entropyDistanceDetection?config.entropyDistanceDetection:100;
 		props = {
-			particles: config.particles,
-			entropyParticles: config.entropyParticles
+			particles: config.particles?config.particles:150,
+			entropyParticles: config.entropyParticles?config.entropyParticles:3
 		};
-		blur = config.blur;
-		showPoints = config.showPoints;
-		showEntropyPoints = config.showEntropyPoints;
-		showEntropyLines = config.showEntropyLines;
-		clearCanvas = config.clearCanvas;
-		lineWidth = config.lineWidth;
-		entropyPower = config.entropyPower;
-		maxSpeed = config.maxSpeed;
-		colors = config.colors;
-		randomColors = config.randomColors;;
-		defaultColor = config.defaultColor;
+		blur = config.blur?config.blur:0;
+		showPoints = config.showPoints?config.showPoints:false;
+		showEntropyPoints = config.showEntropyPoints?config.showEntropyPoints:false;
+		showEntropyLines = config.showEntropyLines?config.showEntropyLines:false;
+		clearCanvas = config.clearCanvas?config.clearCanvas:true;
+		lineWidth = config.lineWidth?config.lineWidth:5;
+		entropyPower = config.entropyPower?config.entropyPower:30;
+		maxSpeed = config.maxSpeed?config.maxSpeed:10;
+		colors = config.colors?config.colors:['255,255,255', '73,251,53', '255,120,0', '251,132,53', '251,53,172', '132,53,251', '251,231,53', '251,53,73'];
+		randomColors = config.randomColors?config.randomColors:false;
+		defaultColor = config.defaultColor?config.defaultColor:'rgba(255,255,255,';
 		numColors = colors.length;
+		cleanAfterLoops = config.cleanAfterLoops?config.cleanAfterLoops:0;
+		
 		len = props.particles;
 		
 		fullScreenCanvas();
@@ -138,10 +144,16 @@ function generateEntropyEntity () {
 function loop() {
 	"use strict";
 	//draw model
-	if(clearCanvas) {
+	if(clearCanvas && nloop === 0) {
 		context.clearRect ( 0 , 0 , w, h );
 	}
-
+	
+	if(nloop === cleanAfterLoops) {
+		nloop = 0;
+	} else {
+		nloop++;
+	}
+	
 	///////////////////////////////////draw balls models
 	context.fillStyle = 'white';
 	var len = model.length;
