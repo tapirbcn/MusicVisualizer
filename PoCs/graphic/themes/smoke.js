@@ -8,7 +8,7 @@ config = {
 	showEntropyPoints: false, //display the entropy particles
 	showEntropyLines: false, //display lines when a particles collides with entropy paticles
 	clearCanvas: true, //clear the canvas on each tick?
-	lineWidth: 5, //with of the lines
+	lineWidth: 10, //with of the lines
 	entropyPower: 0.5, //power of the entroy repelers
 	maxSpeed: 10, //maximum speed of a particle
 	colors: ['255,255,255', '73,251,53', '255,120,0', '251,132,53',

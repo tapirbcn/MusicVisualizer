@@ -1,7 +1,7 @@
 config = {
 	distanceDetection: 200, //maximum distance between two points to draw a line
 	entropyDistanceDetection: 100, //maximum distance of action of the entropy generators
-	particles: 150, //particles bouncing on the screen
+	particles: 170, //particles bouncing on the screen
 	entropyParticles: 3, //entroy particles bouncing on the screen
 	blur: 1, //blur level
 	showPoints: false, //display the bouncing particles?

@@ -8,7 +8,8 @@ var themes = [
 	'retro',
 	'smoke',
 	'sentinel',
-	'duo'
+	'duo',
+	'bugs'
 ];
 
 var cnv = null;
@@ -93,7 +94,7 @@ $( document ).ready(function() {
 		lineWidth = config.lineWidth?config.lineWidth:5;
 		entropyPower = config.entropyPower?config.entropyPower:30;
 		maxSpeed = config.maxSpeed?config.maxSpeed:10;
-		colors = config.colors?config.colors:['255,255,255', '73,251,53', '255,120,0', '251,132,53', '251,53,172', '132,53,251', '251,231,53', '251,53,73'];
+		colors = config.colors?config.colors:['255,255,255', '73,251,53', '255,120,0', '251,132,53', '251,53,172', '132,53,251', '251,231,53', '251,53,73', '0,255,255'];
 		randomColors = config.randomColors?config.randomColors:false;
 		defaultColor = config.defaultColor?config.defaultColor:'rgba(255,255,255,';
 		numColors = colors.length;
