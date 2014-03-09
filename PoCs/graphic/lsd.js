@@ -3,48 +3,69 @@ var context = null;
 var h,w;
 var paused = false;
 
-///////////////////////// config
+///////////////////////// config variables, do not edit, use themes!
 
-var distanceDetection = 180;
-var entropyDistanceDetection = 100;
+var distanceDetection;
+var entropyDistanceDetection ;
+var props = {};
+var blur;
+var showPoints;
+var showEntropyPoints;
+var showEntropyLines;
+var clearCanvas;
 
-var props = {
-	particles: 100,
-	entropyParticles: 3
-};
+var lineWidth;
+var entropyPower;
+var maxSpeed;
 
-var blur = 0; //slow in chrome :(
-var showPoints = false;
-var showEntropyPoints = false;
-var showEntropyLines = false;
-var clearCanvas = true;
-
-var lineWidth = 5;
-var entropyPower = 0.5;
-var maxSpeed = 10;
-
-var colors = ['255,255,255', '73,251,53', '255,120,0', '251,132,53',
-			'251,53,172', '132,53,251', '251,231,53', '251,53,73'];
+var colors;
 			
-var randomColors = true;
+var randomColors;
 
-var defaultColor = 'rgba(255,255,255,';
+var defaultColor;
 
-//////////////////////// end config
-
-
-var numColors = colors.length;
-
-len = props.particles;
+//////////////////////// end config, do not edit, use themes!
 
 var model = [];
 var entropyModel = [];
+var len, numColors;
 
 $( document ).ready(function() {
 	cnv = $('#display')[0];
 	context = cnv.getContext('2d');
-	fullScreenCanvas();
-	init();
+	//get config!
+	var theme = GetURLParameter('theme');
+
+	if(!theme) { 
+		theme = 'light';
+	}
+	$.getScript( "themes/"+theme+".js" ).done(function( script, textStatus ) {
+		distanceDetection = config.distanceDetection;
+		entropyDistanceDetection = config.entropyDistanceDetection ;
+		props = {
+			particles: config.particles,
+			entropyParticles: config.entropyParticles
+		};
+		blur = config.blur;
+		showPoints = config.showPoints;
+		showEntropyPoints = config.showEntropyPoints;
+		showEntropyLines = config.showEntropyLines;
+		clearCanvas = config.clearCanvas;
+		lineWidth = config.lineWidth;
+		entropyPower = config.entropyPower;
+		maxSpeed = config.maxSpeed;
+		colors = config.colors;
+		randomColors = config.randomColors;;
+		defaultColor = config.defaultColor;
+		numColors = colors.length;
+		len = props.particles;
+		
+		fullScreenCanvas();
+		init();
+	}).fail(function( jqxhr, settings, exception ) {
+		alert('Incorrect theme name!');
+	});
+
 });
 
 $(window).resize(function() {
@@ -245,4 +266,20 @@ function loop() {
 			}
 		}
 	}
+}
+
+//misc 
+
+function GetURLParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) 
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) 
+        {
+            return sParameterName[1];
+        }
+    }
 }
