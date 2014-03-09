@@ -3,7 +3,7 @@ config = {
 	entropyDistanceDetection: 100, //maximum distance of action of the entropy generators
 	particles: 150, //particles bouncing on the screen
 	entropyParticles: 3, //entroy particles bouncing on the screen
-	blur: 0, //blur level
+	blur: 1, //blur level
 	showPoints: false, //display the bouncing particles?
 	showEntropyPoints: false, //display the entropy particles
 	showEntropyLines: false, //display lines when a particles collides with entropy paticles
@@ -11,7 +11,7 @@ config = {
 	lineWidth: 5, //with of the lines
 	entropyPower: 0.5, //power of the entroy repelers
 	maxSpeed: 10, //maximum speed of a particle
-	colors: ['255,255,255', '73,251,53', '255,120,0', '251,132,53', '251,53,172', '132,53,251', '251,231,53', '251,53,73'],
-	randomColors: false,
+	colors: ['255,255,255', '255,0,0'],
+	randomColors: true,
 	defaultColor: 'rgba(255,255,255,'
 };

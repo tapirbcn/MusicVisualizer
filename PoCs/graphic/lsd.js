@@ -6,7 +6,9 @@ var themes = [
 	'mini',
 	'psycho',
 	'retro',
-	'smoke'
+	'smoke',
+	'sentinel',
+	'duo'
 ];
 
 var cnv = null;
