@@ -1,7 +1,7 @@
 config = {
-	distanceDetection: 200, //maximum distance between two points to draw a line
+	distanceDetection: 400, //maximum distance between two points to draw a line
 	entropyDistanceDetection: 100, //maximum distance of action of the entropy generators
-	particles: 150, //particles bouncing on the screen
+	particles: 50, //particles bouncing on the screen
 	entropyParticles: 3, //entroy particles bouncing on the screen
 	blur: 0, //blur level
 	showPoints: false, //display the bouncing particles?
@@ -14,6 +14,6 @@ config = {
 	colors: ['255,255,255', '73,251,53', '255,120,0', '251,132,53',
 			'251,53,172', '132,53,251', '251,231,53', '251,53,73'],
 	randomColors: false,
-	defaultColor: 'rgba(255,255,255,',
-	cleanAfterLoops: 10
+	defaultColor: 'rgba(0,255,0,',
+	cleanAfterLoops: 9
 };
