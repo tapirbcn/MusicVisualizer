@@ -1,9 +1,20 @@
+var themes = [
+	'light',
+	'aurora',
+	'figures',
+	'ghost',
+	'mini',
+	'psycho',
+	'retro',
+	'smoke'
+];
+
 var cnv = null;
 var context = null;
 var h,w;
 var paused = false;
 var nloop = 0;
-
+var currentTheme = 0;
 ///////////////////////// config variables, do not edit, use themes!
 
 var distanceDetection;
@@ -38,9 +49,31 @@ $( document ).ready(function() {
 	//get config!
 	var theme = GetURLParameter('theme');
 
-	if(!theme) { 
-		theme = 'light';
+	if(theme) { 
+		currentTheme = themes.indexOf(theme);
 	}
+	
+	$(document).keydown(function(e){
+		if (e.keyCode == 39) { //left
+			currentTheme++;
+			if(currentTheme === themes.length) {
+				currentTheme = 0;
+			}
+			var newTheme = themes[currentTheme];
+			document.location.href='?theme='+newTheme;
+			return false;
+		} else if (e.keyCode == 37) { //left
+			currentTheme--;
+			if(currentTheme === -1) {
+				currentTheme = themes.length-1;
+			}
+			var newTheme = themes[currentTheme];
+			document.location.href='?theme='+newTheme;
+			return false;
+		}
+	});
+
+	theme = themes[currentTheme];
 	$.getScript( "themes/"+theme+".js" ).done(function( script, textStatus ) {
 	
 		//try to read config from theme!
