@@ -2,7 +2,9 @@ var cnv = null;
 var context = null;
 var h,w;
 var paused = false;
+
 ///////////////////////// config
+
 var distanceDetection = 180;
 var entropyDistanceDetection = 100;
 
@@ -20,10 +22,17 @@ var clearCanvas = true;
 var lineWidth = 5;
 var entropyPower = 0.5;
 var maxSpeed = 10;
-//////////////////////// end config
 
 var colors = ['255,255,255', '73,251,53', '255,120,0', '251,132,53',
 			'251,53,172', '132,53,251', '251,231,53', '251,53,73'];
+			
+var randomColors = true;
+
+var defaultColor = 'rgba(255,255,255,';
+
+//////////////////////// end config
+
+
 var numColors = colors.length;
 
 len = props.particles;
@@ -63,15 +72,21 @@ function unpause() {
 function init() {
 	"use strict";
 	var entity;
+	var mycolor;
 	cnv.style.webkitFilter = "blur("+blur+"px)";
 	for(var i=0; i<props.particles; i++) {
-
+		if(randomColors) {
+			mycolor = 'rgba('+colors[~~(Math.random()*numColors)]+',';
+		} else {
+			mycolor = defaultColor;
+		}
+		
 		entity = {
 			x: Math.floor(Math.random() * w) + 1,
 			y: Math.floor(Math.random() * h) + 1,
 			speedY: Math.random() * 2 * maxSpeed - maxSpeed,
 			speedX: Math.random() * 2 * maxSpeed - maxSpeed,
-			color: 'rgba('+colors[~~(Math.random()*numColors)]+','
+			color: mycolor
 		};
 
 		model.push(entity);
