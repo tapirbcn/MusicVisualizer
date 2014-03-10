@@ -23,3 +23,8 @@ for (y = canvas.height; y--;) {
 	}
 }
 ctx.putImageData(imageData, 0, 0);
+
+//More complete alternative: 
+//	https://github.com/cslarsen/mandelbrot-js/blob/master/mandelbrot.js 
+// in action in: 
+//	http://mandelbrot-set.com
