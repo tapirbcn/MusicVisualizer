@@ -331,3 +331,10 @@ function GetURLParameter(sParam)
         }
     }
 }
+
+function beat(distance, duration) {
+	distanceDetection += distance;
+	window.setTimeout(function () {
+		distanceDetection -= distance;
+	}, duration);
+}
