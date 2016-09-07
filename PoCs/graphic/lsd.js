@@ -209,12 +209,26 @@ function loop() {
 		entity.x += entity.speedX;
 		entity.y += entity.speedY;
 
-		if(entity.x < 0 || entity.x > w) {
-			entity.speedX = entity.speedX*-1;
+		if(entity.y < 0) {
+			entity.speedY = entity.speedY * -1;
+			entity.y = entity.y * -1;
 		}
 
-		if(entity.y < 0 || entity.y > h) {
+
+		if(entity.x < 0) {
+			entity.speedX = entity.speedX * -1;
+			entity.x = entity.x * -1;
+		}
+
+
+		if(entity.y > h) {
 			entity.speedY = entity.speedY*-1;
+			entity.y = h - (entity.y - h);
+		}
+
+		if(entity.x > w) {
+			entity.speedX = entity.speedX * -1;
+			entity.x = w - (entity.x - w);
 		}
 	}
 
